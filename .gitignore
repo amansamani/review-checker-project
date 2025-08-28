@@ -1,0 +1,32 @@
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ---- Virtual environments ----
+.env
+.venv
+env/
+venv/
+
+# ---- Flask instance ----
+instance/
+*.db
+*.sqlite3
+
+# ---- Logs ----
+*.log
+
+# ---- VS Code / Jupyter ----
+.vscode/
+.ipynb_checkpoints
+
+# ---- System files ----
+.DS_Store
+Thumbs.db
+
+# ---- Model/tokenizer files ----
+*.h5
+*.keras
+*.pkl   # 👈 this will exclude tokenizer.pkl
