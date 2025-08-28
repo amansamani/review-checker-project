@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Movie Review Sentiment</title>
+
+<style>
+
+body {
+
+font-family: Arial, sans-serif;
+
+background: #f7f9fc;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+height: 100vh;
+
+margin: 0;
+
+}
+
+.container {
+
+background: white;
+
+padding: 30px;
+
+border-radius: 15px;
+
+box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+
+width: 400px;
+
+text-align: center;
+
+}
+
+textarea {
+
+width: 100%;
+
+height: 100px;
+
+padding: 10px;
+
+border-radius: 8px;
+
+border: 1px solid #ccc;
+
+font-size: 14px;
+
+resize: none;
+
+}
+
+button {
+
+margin-top: 15px;
+
+padding: 10px 20px;
+
+font-size: 16px;
+
+border: none;
+
+border-radius: 8px;
+
+cursor: pointer;
+
+background: #4CAF50;
+
+color: white;
+
+transition: 0.3s;
+
+}
+
+button:hover {
+
+background: #45a049;
+
+}
+
+.result {
+
+margin-top: 20px;
+
+padding: 15px;
+
+border-radius: 8px;
+
+font-weight: bold;
+
+}
+
+.positive {
+
+background: #d4edda;
+
+color: #155724;
+
+}
+
+.negative {
+
+background: #f8d7da;
+
+color: #721c24;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🎬 Movie Review Sentiment</h2>
+
+<textarea id="review" placeholder="Type your review here..."></textarea><br>
+
+<button onclick="analyzeReview()">Analyze</button>
+
+<div id="result" class="result" style="display:none;"></div>
+
+</div>
+
+<script>
+
+async function analyzeReview() {
+
+const reviewText = document.getElementById("review").value;
+
+const response = await fetch("http://127.0.0.1:5000/predict", {
+
+method: "POST",
+
+headers: { "Content-Type": "application/json" },
+
+body: JSON.stringify({ review: reviewText })
+
+});
+
+const data = await response.json();
+
+const resultDiv = document.getElementById("result");
+
+resultDiv.style.display = "block";
+
+resultDiv.textContent = `Sentiment: ${data.sentiment} (Score: ${data.score.toFixed(3)})`;
+
+// Apply styling based on sentiment
+
+resultDiv.className = "result " + (data.sentiment === "Positive" ? "positive" : "negative");
+
+}
+
+</script>
+
+</body>
+
+</html>
