@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load model and tokenizer
 model_path = os.path.join(BASE_DIR, "review.keras")
-model = tf.keras.models.load_model(model_path)
+model = None  # Load model lazily to save memory
 
 tokenizer_path = os.path.join(BASE_DIR, "tokenizer.pkl")
 with open(tokenizer_path, "rb") as f:
@@ -27,6 +27,9 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    global model
+    if model is None:
+        model = tf.keras.models.load_model('review.keras')
     data = request.get_json()
     review = data.get("review", "")
     threshold = data.get("threshold", 0.6)
