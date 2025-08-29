@@ -144,14 +144,10 @@ async function analyzeReview() {
 
 const reviewText = document.getElementById("review").value;
 
-const response = await fetch("http://127.0.0.1:5000/predict", {
-
-method: "POST",
-
-headers: { "Content-Type": "application/json" },
-
-body: JSON.stringify({ review: reviewText })
-
+const response = await fetch("/predict", {  // use relative path
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ review: reviewText })
 });
 
 const data = await response.json();

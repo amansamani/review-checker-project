@@ -5,14 +5,18 @@ import pickle
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask_cors import CORS
-app = Flask(__name__,static_folder="../frontend", template_folder="../frontend")
 
+app = Flask(__name__, static_folder="../frontend", template_folder="../frontend")
 CORS(app)
-# 🔹 Load model + tokenizer
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # this is /opt/render/project/src/backend
-model_path = os.path.join(BASE_DIR, "review.keras")    # correct path
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Load model and tokenizer
+model_path = os.path.join(BASE_DIR, "review.keras")
 model = tf.keras.models.load_model(model_path)
-with open("tokenizer.pkl", "rb") as f:
+
+tokenizer_path = os.path.join(BASE_DIR, "tokenizer.pkl")
+with open(tokenizer_path, "rb") as f:
     tokenizer = pickle.load(f)
 
 MAXLEN = 200
@@ -40,5 +44,5 @@ def predict():
         "sentiment": sentiment
     })
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# Do NOT include app.run() on Render
+# Render will use gunicorn: gunicorn app:app --bind 0.0.0.0:$PORT
