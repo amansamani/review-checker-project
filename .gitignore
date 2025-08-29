@@ -28,5 +28,4 @@ Thumbs.db
 
 # ---- Model/tokenizer files ----
 *.h5
-*.keras
 *.pkl   # 👈 this will exclude tokenizer.pkl
