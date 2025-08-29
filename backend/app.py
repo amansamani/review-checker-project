@@ -9,13 +9,8 @@ app = Flask(__name__,static_folder="../frontend", template_folder="../frontend")
 
 CORS(app)
 # 🔹 Load model + tokenizer
-# Get the absolute path to the project root
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# Path to the model inside the backend folder
-model_path = os.path.join(BASE_DIR, "backend", "review.keras")
-
-# Load the model
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # this is /opt/render/project/src/backend
+model_path = os.path.join(BASE_DIR, "review.keras")    # correct path
 model = tf.keras.models.load_model(model_path)
 with open("tokenizer.pkl", "rb") as f:
     tokenizer = pickle.load(f)
