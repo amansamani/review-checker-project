@@ -4,7 +4,7 @@ import pickle
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask_cors import CORS
-app = Flask(__name__)
+app = Flask(__name__,static_folder="../frontend", template_folder="../frontend")
 
 CORS(app)
 # 🔹 Load model + tokenizer
