@@ -38,7 +38,17 @@ def predict():
     padded = pad_sequences(sequence, maxlen=MAXLEN)
 
     score = model.predict(padded)[0][0]
-    sentiment = "Positive" if score >= threshold else "Negative"
+     # Decide sentiment + emoji
+    if 0.8 <= score <= 1.0:
+        sentiment = "Excellent Review 😍"
+    elif 0.6 <= score < 0.8:
+        sentiment = "Very Good Review 🙂"
+    elif 0.4 <= score < 0.6:
+        sentiment = "Not So Good Review 😐"
+    elif 0.2 <= score < 0.4:
+        sentiment = "Bad Review 😕"
+    else:
+        sentiment = "Worst Review 😡"
 
     return jsonify({
         "review": review,
